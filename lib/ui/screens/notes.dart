@@ -33,9 +33,12 @@ class HomeNotesPage extends StatelessWidget {
               final doc = notes[index];
               final data = doc.data() as Map<String, dynamic>;
 
+              final body = data['body']?.toString() ?? '';
+              final preview = body.length > 50 ? body.substring(0, 50) : body;
+
               return ListTile(
                 title: Text(data['title'] ?? ''),
-                subtitle: Text(data['body']?.toString().substring(0, 50) ?? ''),
+                subtitle: Text(preview),
                 trailing: PopupMenuButton<String>(
                   onSelected: (value) {
                     if (value == 'edit') {

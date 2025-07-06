@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:notee_app/ui/screens/notes.dart'; // Import your notes screen here
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.controller});
@@ -86,7 +87,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           );
 
-                          // TODO: Navigate to home screen here
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const HomeNotesPage(),
+                            ),
+                          );
                         }
                       } catch (e) {
                         ScaffoldMessenger.of(context).showSnackBar(

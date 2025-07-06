@@ -37,9 +37,17 @@ class _CreateNotePageState extends State<CreateNotePage> {
             const SizedBox(height: 12),
             ElevatedButton(
               onPressed: () async {
+                final user = FirebaseAuth.instance.currentUser;
+
+                if (user == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("You're not logged in.")),
+                  );
+                  return;
+                }
+
                 final now = DateTime.now();
                 final evening = now.hour >= 18 && now.hour <= 23;
-                final userId = FirebaseAuth.instance.currentUser?.uid;
 
                 await FirebaseFirestore.instance.collection('notes').add({
                   'title': _titleController.text.trim(),
@@ -50,7 +58,7 @@ class _CreateNotePageState extends State<CreateNotePage> {
                       : (now.hour < 12 ? 'Morning' : 'Afternoon'),
                   'createdAtReadable':
                       "${now.hour}:${now.minute.toString().padLeft(2, '0')}",
-                  'owner': userId,
+                  'owner': user.uid,
                 });
 
                 Navigator.pop(context);

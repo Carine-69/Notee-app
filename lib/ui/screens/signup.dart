@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:notee_app/services/user_service.dart'; // Adjust if needed
+import 'package:notee_app/services/user_service.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key, required this.controller});
@@ -115,7 +115,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             SnackBar(content: Text("Welcome, ${user.email}!")),
                           );
 
-                          // TODO: Navigate to dashboard or home screen here
+                          await Future.delayed(
+                            const Duration(milliseconds: 800),
+                          );
+                          Navigator.pushReplacementNamed(context, '/login');
                         }
                       } catch (e) {
                         ScaffoldMessenger.of(
@@ -135,6 +138,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       foregroundColor: Colors.black,
                     ),
                     child: const Text('Sign Up'),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Already have an account?",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/login');
+                        },
+                        child: const Text(
+                          'Log in',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
